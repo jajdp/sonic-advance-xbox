@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Package
+  xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
+  xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest"
+  xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
+  xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
+  IgnorableNamespaces="uap mp rescap">
+
+  <!-- CAMBIA LAS DOS PRIMERAS LINEAS POR LAS TUYAS antes de empaquetar.
+
+       Publisher tiene que ser IDENTICO al sujeto de tu certificado de firma. Si no coinciden,
+       la consola rechaza el paquete.
+
+       Name es el nombre interno del paquete. Con el Publisher forma la FAMILIA, que es como la
+       consola reconoce al juego y de la que cuelga su LocalState. Eligelo una vez y dejalo. -->
+  <Identity
+    Name="CHANGE-ME-SonicAdvance2"
+    Publisher="CN=CHANGE-ME"
+    Version="0.1.0.0"
+    ProcessorArchitecture="x64" />
+
+  <mp:PhoneIdentity PhoneProductId="3f9b2c74-8d51-4a6e-9b17-5c2ea8d34f10" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+
+  <Properties>
+    <DisplayName>Sonic Advance 2 Decomp</DisplayName>
+    <PublisherDisplayName>CHANGE-ME</PublisherDisplayName>
+    <Logo>Assets\StoreLogo.png</Logo>
+  </Properties>
+
+  <Dependencies>
+    <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.19041.0" MaxVersionTested="10.0.26100.0" />
+    <!-- De aqui sale VCRUNTIME140_APP, que es el CRT que importa el ejecutable -->
+    <PackageDependency Name="Microsoft.VCLibs.140.00" MinVersion="14.0.33519.0" Publisher="CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US" />
+  </Dependencies>
+
+  <Resources>
+    <Resource Language="en-us"/>
+  </Resources>
+
+  <Applications>
+    <Application Id="App"
+      Executable="sa2.exe"
+      EntryPoint="uwp.App">
+      <!-- Solo sq y ss, igual que en los demas ports propios de esta carpeta: el mosaico ancho
+           no lo muestra nunca la consola en modo desarrollador. -->
+      <uap:VisualElements
+        DisplayName="Sonic Advance 2 Decomp"
+        Square150x150Logo="Assets\Square150x150Logo.png"
+        Square44x44Logo="Assets\Square44x44Logo.png"
+        Description="UWP build of the sa2 decompilation of Sonic Advance 2, for an Xbox Series in Developer Mode"
+        BackgroundColor="transparent">
+        <uap:SplashScreen Image="Assets\SplashScreen.png" />
+      </uap:VisualElements>
+    </Application>
+  </Applications>
+
+  <Capabilities>
+    <rescap:Capability Name="runFullTrust"/>
+    <rescap:Capability Name="expandedResources" />
+  </Capabilities>
+</Package>
