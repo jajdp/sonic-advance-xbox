@@ -2,6 +2,15 @@
 
 All notable changes to this recipe. Dates are `YYYY-MM-DD`.
 
+## 1.0.2 — 2026-10-20
+
+### Changed
+
+- **The README now says which console this was tested on, and which one it was not.** Everything here
+  was built and measured on an **Xbox Series X** in Developer Mode; a **Series S has never been tried**,
+  so nothing here says anything about one. The wording used to say "Xbox Series", which reads as if it
+  covered both, and it does not.
+
 ## 1.0.1 — 2026-10-16
 
 ### Fixed
@@ -15,7 +24,7 @@ All notable changes to this recipe. Dates are `YYYY-MM-DD`.
 
 ## 1.0.0 — 2026-10-14
 
-First release. The package built this way has been on two Xbox Series consoles since 2026-09-16.
+First release. The package built this way has been on two Xbox Series X consoles since 2026-09-16.
 
 ### Included
 

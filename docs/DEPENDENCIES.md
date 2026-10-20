@@ -10,4 +10,4 @@
 | SDL2 | Built for **WindowsStore**, not the desktop binaries (`docs/HOW-IT-WORKS.md`) |
 | Visual Studio 2022 | For `makeappx` and `signtool` |
 | Python 3 | Any 3.8+, standard library only |
-| An Xbox Series | In **Developer Mode**, with a user signed in |
+| An Xbox Series X | In **Developer Mode**, with a user signed in |

@@ -1,12 +1,22 @@
 # Sonic Advance 2 on Xbox — the UWP port
 
 How to take the [sa2](https://github.com/SAT-R/sa2) decompilation of *Sonic Advance 2* (Game Boy
-Advance, 2002) and run it **on an Xbox Series in Developer Mode**. The same recipe also builds
+Advance, 2002) and run it **on an Xbox Series X in Developer Mode**. The same recipe also builds
 *Sonic Advance 1*, which the project includes.
 
 *(Español: [README.es.md](README.es.md))*
 
 Both have been playing on two consoles since 2026-09-16, with gameplay confirmed.
+
+## Which console this was tested on
+
+**An Xbox Series X**, in Developer Mode. Both of the consoles this was built and tested on are Series X,
+so that is the only hardware anything claimed here covers.
+
+**A Series S has never been tried — not once.** It is a different machine: less memory available to a
+game and a weaker GPU. This may work on one, it may run slower, or it may not start at all; nothing here
+has been measured on it. If you run it on a Series S, what you get is not what this README reports, and
+none of the numbers here are a promise about that console.
 
 ## What this repository is
 
