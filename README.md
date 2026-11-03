@@ -66,6 +66,16 @@ can check them yourself against your own checkout.
 
 ## Credits and license
 
+**Almost none of what makes this work is ours.** This repository is a recipe that glues together other people's work; without any one of these pieces there would be no port at all.
+
+| What it does | Who made it | License |
+|---|---|---|
+| **[sa2](https://github.com/SAT-R/sa2)** — decompiles *Sonic Advance 1 & 2* | **SAT-R** | none declared |
+| **[SDL](https://github.com/libsdl-org/SDL)** — window, input and audio | **Sam Lantinga** and the SDL contributors | zlib |
+
+**The packaging recipe, the tooling and this documentation** are by **Recompilaciones**.
+
+
 Tooling and the UWP layer by **Recompilaciones**, under the [MIT License](LICENSE).
 
 *Sonic Advance 2* is © Sega / Sonic Team / Dimps. Not affiliated with them, with Microsoft or with
