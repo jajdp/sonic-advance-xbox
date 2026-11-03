@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
 """Construye Sonic Advance 2 (o 1) para UWP: recompila con ABI de MSVC y enlaza con ld.lld.
 
-El metodo es el del port de Diddy Kong Racing (another port of this family
-xbox\\notas-port-uwp.md, seccion 4nonies): NO se toca el sistema de compilacion del repo ni se
-mantiene un segundo arbol. Se captura la build real -- alli con compile_commands.json, aqui con
-`make -n`, que para un Makefile es lo mismo -- y se traduce cada orden al dialecto UWP.
+EL METODO: no se toca el sistema de compilacion del repo ni se mantiene un segundo arbol. Se
+captura la build real -- aqui con `make -n`, que para un Makefile es lo mismo que un
+compile_commands.json -- y se traduce cada orden al dialecto UWP.
 
 La cadena del repo tiene tres pasos por archivo y se replican los tres:
 
@@ -29,10 +28,14 @@ from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
 # --- herramientas -------------------------------------------------------------------------------
-# clang y lld salen del toolkit de Mario Kart Wii, igual que en DKR: no hay que instalar nada.
-MKW = Path(r"<tree>"
-           r"\Recompilaciones sin IA\Wii\Mario Kart Wii")
-TOOLKIT = MKW / r"pc\WiiCompiled\Install\Toolkit\llvm-mingw\bin"
+# clang y lld salen de un toolkit llvm-mingw YA COMPILADO: no hay que instalar nada ni usar el
+# clang de Visual Studio (no trae el target de MSVC que hace falta aqui). Cualquier llvm-mingw
+# reciente sirve; se le indica con la variable SA2_TOOLKIT, apuntando a su carpeta `bin`:
+#
+#     set SA2_TOOLKIT=C:\llvm-mingw\bin
+#
+# Lo unico que se le pide es que traiga clang 22 (de ahi el RESOURCE_DIR de mas abajo).
+TOOLKIT = Path(os.environ.get("SA2_TOOLKIT", r"C:\llvm-mingw\bin"))
 CLANG = TOOLKIT / "clang.exe"
 CLANGXX = TOOLKIT / "clang++.exe"
 LLD = TOOLKIT / "ld.lld.exe"
@@ -50,7 +53,8 @@ MINGW = Path(r"C:\msys64\mingw64\bin")
 MGW_CPP = MINGW / "cpp.exe"
 MGW_AS = MINGW / "as.exe"
 
-SRC = Path(r"<tree>")
+# El arbol del decomp, el que tiene el Makefile. Se indica con SA2_ARBOL.
+SRC = Path(os.environ.get("SA2_ARBOL", r"C:\sonic-advance"))
 # Un arbol de objetos por juego: los dos comparten los MISMOS nombres de objeto (src/core.o...)
 # compilados con -D GAME distinto, asi que en una sola carpeta se pisarian.
 OUT = SRC / "build-uwp" / os.environ.get("SA2_JUEGO", "sa2")

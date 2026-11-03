@@ -1,16 +1,13 @@
 # -*- coding: utf-8 -*-
 """Arma el .msix del port UWP de Sonic Advance 2 (o 1) y lo firma.
 
-Mismo patron que el de Diddy Kong Racing (C:\\dkr-msvc\\empaquetar_dkr.py), con una diferencia
-que simplifica todo: **aqui no hay ROM que acompanar**. La cadena del decomp expande los
+Lo que lo simplifica todo: **aqui no hay ROM que acompanar**. La cadena del decomp expande los
 INCBIN_U8 a literales de C, asi que los graficos, los mapas y la musica viajan DENTRO del
 ejecutable. El paquete es el exe, SDL2.dll y los mosaicos.
 
-El NOMBRE y los MOSAICOS no se deciden aqui: salen de `identidad-visual.xlsx` y de la carpeta
-`<your files>\\Display Images\\<variante>\\` del subproyecto, y los aplica la herramienta
-central `another port of this family.py --aplicar-a`, the same way as the other ports here.
-en Paper Mario. Este arbol produce DOS paquetes del mismo repo, asi que la fila del Excel se
-elige con `--variante sa1` / `--variante sa2`; cada variante tiene su propia carpeta de arte.
+El NOMBRE y los MOSAICOS no se deciden aqui: son del usuario y se le pasan por la carpeta de
+arte. Este arbol produce DOS paquetes del mismo repo, asi que la variante se elige con
+`--variante sa1` / `--variante sa2`; cada una tiene su propia carpeta de arte.
 El CRT no va dentro: llega por la dependencia Microsoft.VCLibs.140.00 que declara el manifiesto.
 
 Uso:  py -3 empaquetar_sa2.py [version]          (sa2, el de por defecto)

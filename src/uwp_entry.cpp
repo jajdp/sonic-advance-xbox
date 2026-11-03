@@ -8,9 +8,8 @@
  *
  * No se usa la plantilla de SDL porque es C++/CX (/ZW), que clang no habla. Lo que hace son dos
  * cosas y las dos caben en C++ normal: RoInitialize(RO_INIT_MULTITHREADED) y SDL_WinRTRunApp.
- * Receta heredada del port de Diddy Kong Racing (xbox\notas-port-uwp.md, seccion 4nonies).
  *
- * Diferencia con DKR: aqui NO hay que localizar una ROM. El pipeline del decomp expande los
+ * Y aqui NO hay que localizar ninguna ROM. El pipeline del decomp expande los
  * INCBIN_U8 a literales de C con la herramienta `preproc`, asi que todos los assets viajan
  * dentro del ejecutable. El paquete es exe + SDL2.dll y nada mas.
  */

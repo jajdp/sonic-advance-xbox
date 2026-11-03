@@ -8,8 +8,8 @@
 patch, not as the context lines a diff needs. So the two changes it requires are written down here
 instead, precisely enough to redo them in a couple of minutes.
 
-This is the same rule the other repositories in this family apply to unlicensed projects, and it is
-why `rush2-xbox` and `mk64-xbox` look the way they do.
+It is the rule for any project that publishes no license: describe the change, do not reproduce
+the code.
 
 ## The two changes, described
 

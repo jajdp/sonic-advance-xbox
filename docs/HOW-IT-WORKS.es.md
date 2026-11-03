@@ -8,8 +8,8 @@
 suya: ni en un parche, ni como las líneas de contexto que necesita un diff. Así que los dos cambios
 que hacen falta están escritos aquí, con detalle suficiente para rehacerlos en un par de minutos.
 
-Es la misma regla que los demás repositorios de esta familia aplican a los proyectos sin licencia, y
-es por lo que `rush2-xbox` y `mk64-xbox` son como son.
+Es la regla para cualquier proyecto que no publica licencia: se describe el cambio, no se
+reproduce el código.
 
 ## Los dos cambios, descritos
 
