@@ -25,11 +25,17 @@ SIGNTOOL = SDK_BIN / "signtool.exe"
 HUELLA = "CHANGE-ME"   # CN=Decompilaciones
 
 SDL2_UWP_BIN = Path(r"C:\sdl2-uwp\SDL2-2.32.10\VisualC-WinRT\x64\Release\SDL-UWP")
-SUBPROYECTO = Path(r"<tree>"
-                   r"\Game Boy Advance\Sonic Advance 2")
-PAQUETE = SUBPROYECTO / "xbox" / "paquete"
-IDENTIDAD = SUBPROYECTO.parents[1] / "herramientas" / "identidad-visual.py"
-JUEGO_EXCEL = "Sonic Advance 2"          # la columna `juego` del Excel = la carpeta
+
+# La carpeta de trabajo del empaquetado: el manifiesto, la semilla de mosaicos y el .msix que
+# sale. Se indica con SA2_PAQUETE; por defecto, `paquete\` al lado de este script.
+PAQUETE = Path(os.environ.get("SA2_PAQUETE") or (Path(__file__).resolve().parent / "paquete"))
+
+# Paso OPCIONAL. Si se le da una herramienta en SA2_IDENTIDAD, se la llama para que reescriba el
+# nombre visible y los mosaicos del manifiesto; si no, el paquete se queda con los del manifiesto
+# y la semilla, que ya son validos. El arte es de quien empaqueta: aqui no va ninguno.
+_ident = os.environ.get("SA2_IDENTIDAD")
+IDENTIDAD = Path(_ident) if _ident else None
+JUEGO_NOMBRE = "Sonic Advance 2"
 
 # Los dos juegos salen del MISMO arbol (el repo SAT-R/sa2 trae la decomp de los dos) y por eso
 # comparten subproyecto: Sonic Advance 1 es el «bonus» que ya estaba en el lane de PC. En el
@@ -40,16 +46,21 @@ NOMBRE_MSIX, MANIFIESTO = {
     "sa1": ("SonicAdvance1", "Package-sa1.appxmanifest"),
 }[JUEGO]
 
-EXE = Path(r"<tree>") / JUEGO / f"{JUEGO}.exe"
+# El ejecutable que deja construir_uwp.py, en <SA2_ARBOL>\build-uwp\<juego>\.
+EXE = Path(os.environ.get("SA2_ARBOL", r"C:\sonic-advance")) / "build-uwp" / JUEGO / f"{JUEGO}.exe"
 
 
 def aplicar_identidad(manifiesto):
-    """Nombre para mostrar y mosaicos, desde el Excel y Display Images\\<variante>\\.
+    """Nombre para mostrar y mosaicos. Paso OPCIONAL: sin SA2_IDENTIDAD no se hace nada.
 
     Se aplica sobre la copia de trabajo del paquete, no sobre el manifiesto fuente: los dos
-    manifiestos de este subproyecto viven en la misma carpeta y referencian `Assets\\`, asi que
+    manifiestos de este arbol viven en la misma carpeta y referencian `Assets\\`, asi que
     aplicarlo alli haria que una variante pisara los mosaicos de la otra."""
-    r = subprocess.run([sys.executable, str(IDENTIDAD), "--aplicar-a", JUEGO_EXCEL,
+    if IDENTIDAD is None:
+        print("  identidad visual: SA2_IDENTIDAD sin poner, se deja el nombre y los mosaicos "
+              "que traiga el manifiesto")
+        return 0
+    r = subprocess.run([sys.executable, str(IDENTIDAD), "--aplicar-a", JUEGO_NOMBRE,
                         str(manifiesto), "--variante", JUEGO])
     return r.returncode
 
@@ -61,8 +72,10 @@ def main():
     sdl = SDL2_UWP_BIN / "SDL2.dll"
     semilla = PAQUETE / f"Assets-{JUEGO}"
 
-    faltan = [str(p) for p in [EXE, sdl, semilla, PAQUETE / MANIFIESTO, IDENTIDAD]
-              if not p.exists()]
+    obligatorios = [EXE, sdl, semilla, PAQUETE / MANIFIESTO]
+    if IDENTIDAD is not None:
+        obligatorios.append(IDENTIDAD)
+    faltan = [str(p) for p in obligatorios if not p.exists()]
     if faltan:
         print("=== falta material ===")
         for f in faltan:
@@ -85,7 +98,7 @@ def main():
 
     rc = aplicar_identidad(raiz / "AppxManifest.xml")
     if rc != 0:
-        print(f"identidad-visual.py fallo (codigo {rc}).")
+        print(f"la herramienta de identidad visual fallo (codigo {rc}).")
         return rc
 
     archivos = [p for p in raiz.rglob("*") if p.is_file()]
